@@ -1,32 +1,26 @@
+import login
 
-# Tries to read a users file.
-def load_users(filename):
-    users = {}
-    try:
-        with open(filename, "r") as file:
-            for line in file:
-                username, password = line.strip().split(":")
-                users[username] = password
-    except FileNotFoundError:
-        open(filename, "w").close()  # Create the file if it doesn't exist
-    return users
-
-def save_user(filename, user, password):
-    try:
-        f = open(filename, "a")  
-        f.write(user + ":" + password +"\n")
-    except FileNotFoundError:
-        open(filename, "w").close()
-
-    
 def main():
-    filename = "users.txt"
-    cond =save_user(filename, "mark", "iplier")
-
-    if cond:
-       print("hooray!")
-    else:
-        print("couldn't open the file?")
+    print("Welcome to the Finance App!")
+    while True:
+        print("\n1. Register\n2. Login\n3. Exit")
+        choice = input("Choose: ")
+        if choice == "1":
+            u = input("Username: ")
+            p = input("Password: ")
+            success, message = login.register_user(u, p)
+            print(message)
+        elif choice == "2":
+            u = input("Username: ")
+            p = input("Password: ")
+            success, message = login.login_user(u, p)
+            print(message)
+            if success:
+                print("logged in!")
+        elif choice == "3":
+            break
+        else:
+            print("Invalid choice.")
 
 
 if __name__ == "__main__":
