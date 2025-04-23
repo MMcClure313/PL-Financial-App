@@ -5,19 +5,22 @@ def menu(username):
     while True:
         print(f"\nWelcome, {username}! What would you like to do?")
         print("1. Add a cost")
-        print("2. View costs")
-        print("3. Modify monthly budget")
-        print("4. Logout")
+        print("2. Remove a cost")
+        print("3. View costs")
+        print("4. Modify monthly budget")
+        print("5. Logout")
 
         choice = input("Enter choice: ")
 
         if choice == "1":
             add_cost(username)
         elif choice == "2":
-            view_costs(username)
+            remove_cost(username)
         elif choice == "3":
-            update_budget(username)
+            view_costs(username)
         elif choice == "4":
+            update_budget(username)
+        elif choice == "5":
             print("Logging out...")
             break
         else:
@@ -51,6 +54,37 @@ def add_cost(username):
 
     print("Cost added successfully!")
 
+def remove_cost(username):
+    filename = f"{username}.csv"
+    try:
+        with open(filename, "r") as f:
+            rows = list(csv.reader(f))
+
+        if len(rows) <= 2:
+            print("\nNo costs to remove.")
+            return
+
+        print("\nExisting Costs:")
+        for idx, row in enumerate(rows[2:], start=1):  # skip budget and header
+            print(f"{idx}. {row[0]} | {row[1]} | ${row[2]} | {row[3]}")
+
+        choice = input("\nEnter the number of the cost to remove (or press enter to cancel): ")
+        if not choice.isdigit():
+            print("Invalid input. Cancelled.")
+            return
+
+        choice = int(choice)
+        if 1 <= choice <= len(rows) - 2:
+            rows.pop(choice + 1)  # +1 because row[0] is budget, row[1] is header
+            with open(filename, "w", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerows(rows)
+            print(f"\nRemoved cost")
+        else:
+            print("Number out of range.")
+    except FileNotFoundError:
+        print("File not found.")
+ 
 def update_budget(username):
     filename= f"{username}.csv"
     try:
