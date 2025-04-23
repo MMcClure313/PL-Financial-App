@@ -23,11 +23,12 @@ def save_user(user, password):
         pass
 
 # Creates the financial data file for the user and adds in some headers.
-def create_user_csv(username):
+def create_user_csv(username,budget="0"):
     filename = f"{username}.csv"
     if not os.path.exists(filename):
         with open(filename, "w") as f:
-            f.write("Date,Description,Amount,Category\n")  # headers for financial data
+            f.write(f"Budget,{budget}\n")  # First line
+            f.write("Date,Description,Amount,Category,Frequency\n")
 
 # Checks if the user exists first, then saves user based on params
 def register_user(username, password):
