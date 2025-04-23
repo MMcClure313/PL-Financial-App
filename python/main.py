@@ -1,4 +1,5 @@
 import login
+import finances
 
 def main():
     print("Welcome to the Finance App!")
@@ -16,7 +17,7 @@ def main():
             success, message = login.login_user(u, p)
             print(message)
             if success:
-                print("logged in!")
+                finances.menu(u)
         elif choice == "3":
             break
         else:
