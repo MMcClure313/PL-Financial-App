@@ -13,4 +13,13 @@ bool isDateInRange(const std::string& date,
                    const std::string& start,
                    const std::string& end);
 
+// Check if the date falls within a valid calender range
+bool isValidDate(const std::string& date);
+
+// Check if monetary value entered is a positive value
+bool isPositiveMonetaryValue(double x);
+
+// Check if the set payment frequency matches the valid options (ex. WEEKLY)
+bool isValidExpenseFrequency(const std::string& freq);
+
 #endif // UTILS_H
