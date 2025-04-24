@@ -55,11 +55,31 @@ int main() {
         std::string opt; std::getline(std::cin, opt);
 
         if (opt=="1") {
-            std::string date = prompt("Date (YYYY-MM-DD): ");
+            std::string date;
+            do {
+                date = prompt("Date (YYYY-MM-DD): ");
+                if (!isValidDate(date)) {
+                    std::cout << "Invalid date. Please enter the date in YYYY-MM-DD format. \n";
+                }
+            } while (!isValidDate(date));
+
             std::string desc = prompt("Description: ");
-            double amt = promptDouble("Amount: ");
+            double amt;
+            do {
+                amt = promptDouble("Amount: ");
+                if (!isPositiveMonetaryValue(amt)) {
+                    std::cout << "Invalid value. Please enter a non-negative amount. \n";
+                }
+            } while (!isPositiveMonetaryValue(amt));
+            
             std::string cat = prompt("Category: ");
-            std::string freq = prompt("Frequency (NONE/DAILY/WEEKLY/MONTHLY): ");
+            std::string freq;
+            do {
+                freq = prompt("Frequency (NONE/DAILY/WEEKLY/MONTHLY): ");
+                if (!isValidExpenseFrequency(freq)) {
+                    std::cout << "Invalid expense frequency. Please enter NONE/DAILY/WEEKLY/MONTHLY. \n";
+                }
+            } while (!isValidExpenseFrequency(freq));
             Expense e(date, desc, amt, cat, stringToFrequency(freq));
             mgr.addExpense(e);
             mgr.saveExpenses();

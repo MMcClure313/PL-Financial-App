@@ -49,7 +49,7 @@ bool isValidDate(const std::string& date) {
 
 // Check if monetary value entered is a positive value
 bool isPositiveMonetaryValue(double x) {
-    if (x > 0) {
+    if (x > 0.0) {
         return true;
     } else {
         return false;
